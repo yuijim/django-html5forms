@@ -13,4 +13,4 @@ Subclass either HTML5Form or HTML5ModelForm and let it do the rest ;). Alternati
 License
 -------
 
-django-thumbnails is distributed under New BSD License.
+django-html5forms is distributed under New BSD License.
