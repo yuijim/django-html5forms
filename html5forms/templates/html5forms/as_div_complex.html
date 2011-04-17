@@ -1,0 +1,36 @@
+{% load i18n %}
+
+{% if form.non_field_errors %}
+	<div class="form-field">
+	{% for e in form.non_field_errors %}
+        <span class="error">{{ e|safe }}</span>
+    {% endfor %}
+	</div>
+{% endif %}
+{% if form.hidden_fields.errors %}
+	<div class="form-field">
+    {% for field in form.hidden_fields %}
+        {% for e in field.errors %}
+            <span class="error">{{ e|safe }}</span>
+        {% endfor %}
+    {% endfor %}
+	</div>
+{% endif %}
+	<div class="hidden">
+		{% csrf_token %}
+		{% for field in form.hidden_fields %}
+		    {{ field }}
+		{% endfor %}
+	</div>
+{% for field in form.visible_fields %}
+	<div class="form-field">
+	    <label for="id_{{ field.html_name }}" {% if field.field.widget.is_required %}class="required"{% endif %}>{{ field.label|safe }}</label>
+	    <div class="field">
+		    {{ field }}
+		    {% for e in field.errors %}
+		        <label class="error" for="id_{{ field.html_name }}">{{ e|safe }}</label>
+		    {% endfor %}
+	    </div>
+    </div>
+{% endfor %}
+    

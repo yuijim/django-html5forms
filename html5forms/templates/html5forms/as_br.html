@@ -1,0 +1,38 @@
+{% csrf_token %}
+{% if form.non_field_errors %}
+    {% for e in form.non_field_errors %}
+        <span class="error">{{ e|safe }}</span><br />
+    {% endfor %}
+{% endif %}
+{% if form.hidden_fields.errors %}
+    {% for field in form.hidden_fields %}
+        {% for e in field.errors %}
+            <span class="error">{{ e|safe }}</span><br />
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+{% for field in form.hidden_fields %}
+    {{ field }}
+{% endfor %}
+{% for field in form.visible_fields %}
+    {{ field.label_tag }}
+    {% if br_after_labels %}
+        <br />
+    {% endif %}
+    {% ifequal field.field.widget.input_type 'file' %}
+        {% for k,v in form.initial.items %}
+            {% ifequal k field.name %}
+                <a href="{{ v.url }}">{{ v.url }}</a><br />
+            {% endifequal %}
+        {% endfor %}
+    {% endifequal %}
+    {{ field }}
+    {% for e in field.errors %}
+        <span class="error">{{ e|safe }}</span>
+    {% endfor %}
+    <br />
+    {% if field.help_text %}
+        {{ field.help_text|safe }}<br />
+    {% endif %}
+{% endfor %}
+    

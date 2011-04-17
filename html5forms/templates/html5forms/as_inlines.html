@@ -1,0 +1,26 @@
+<div class="hide">
+	{{ formset.management_form }}
+</div>
+<table>
+	<thead>
+		<tr class="even">{% for field in formset.0.visible_fields %}
+			<th>{{ field.label }}</th>
+		{% endfor %}</tr>
+	</thead>
+	<tbody>
+	{% for form in formset %}
+        <tr class="{% cycle 'odd' 'even' %}">{% for field in form.visible_fields %}
+            <td>
+            	{%if forloop.counter0 == 0 %}
+            		{% for field in form.hidden_fields %}
+		                {{ field }}
+		            {% endfor %}
+		        {% endif %}
+                {{ field }}
+                {% for e in field.errors %}
+			        <label class="error" for="id_{{ field.widget.id_for_label }}">{{ e|safe }}</label>
+			    {% endfor %}
+        {% endfor %}</tr>
+	{% endfor %}
+	</tbody>
+</table>
